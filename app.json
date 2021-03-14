@@ -1,0 +1,23 @@
+{
+  "name": "URL Shortner",
+  "description": "A very simple Telegram bot to shorten your links in just a sec!",
+  "keywords": [
+    "telegram",
+    "urlshortner",
+    "productivity"
+  ],
+  "repository": "https://github.com/AffanTheBest/afurlshort",
+  "website": "https://t.me/AffanTheBest",
+  "stack": "container",
+  "env": {
+    "BOT_TOKEN": {
+      "description": "Enter your Telegram bot token. Get it from https://t.me/BotFather",
+      "required": true
+    },
+    "API_KEY": {
+      "description": "Enter your cutt.ly API key. Get it from https://cutt.ly/edit",
+      "required": true
+    }
+  }
+}
+© 2021 GitHub, Inc.
