@@ -13,6 +13,7 @@
     "fetch": "^1.1.0",
     "nodemon": "^2.0.7",
     "telefile": "^0.1.1",
-    "telegraf": "^4.2.1"
+    "telegraf": "^4.2.1",
+    "valid-url": "^1.0.9"
   }
 }
