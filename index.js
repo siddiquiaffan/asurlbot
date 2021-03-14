@@ -1,9 +1,6 @@
 const fetchUrl = require('fetch').fetchUrl;
 const validUrl = require('valid-url');
 
-// const key = 'f250c5003a6b2bfdaaa146fef33fa60bb08ec';
-
-// console.log(shorting(short));
 
 const { Telegraf } = require('telegraf');
 const bot = new Telegraf(process.env.BOT_TOKEN);
