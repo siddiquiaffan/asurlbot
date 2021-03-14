@@ -8,7 +8,9 @@
   ],
   "repository": "https://github.com/AffanTheBest/afurlshort",
   "website": "https://t.me/AffanTheBest",
-  "stack": "container",
+  "scripts": {
+    "worker": "npm start"
+  },
   "env": {
     "BOT_TOKEN": {
       "description": "Enter your Telegram bot token. Get it from https://t.me/BotFather",
@@ -18,6 +20,15 @@
       "description": "Enter your cutt.ly API key. Get it from https://cutt.ly/edit",
       "required": true
     }
-  }
+  },
+  ,
+  "addons": [
+    {
+      "plan": "heroku-postgresql",
+      "options": {
+        "version": "12"
+      }
+    }
+  ]
 }
 © 2021 GitHub, Inc.
