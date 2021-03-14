@@ -6,7 +6,7 @@ const validUrl = require('valid-url');
 // console.log(shorting(short));
 
 const { Telegraf } = require('telegraf');
-const bot = new Telegraf(process.env.BPT_TOKEN);
+const bot = new Telegraf(process.env.BOT_TOKEN);
 const key = process.env.API_KEY;
 bot.start((ctx) => ctx.reply('Welcome!, Send an url to get shorten!'))
 bot.help((ctx) => ctx.reply('Send me a sticker'))
