@@ -4,12 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "fetch": "^1.1.0",
+    "nodemon": "^2.0.7",
     "telefile": "^0.1.1",
     "telegraf": "^4.2.1"
   }
