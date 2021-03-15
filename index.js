@@ -1,9 +1,9 @@
-const fetchUrl = require('fetch').fetchUrl;
+const axios = require('axios');
 const validUrl = require('valid-url');
 
 const { Telegraf } = require('telegraf');
-const bot = new Telegraf(process.env.BOT_TOKEN  || '1655688053:AAGOtNRzLKGye7GCou6TXmGIlrE6WAaoyUA');
-const key = process.env.API_KEY  || 'f250c5003a6b2bfdaaa146fef33fa60bb08ec';
+const bot = new Telegraf(process.env.BOT_TOKEN);
+const key = process.env.API_KEY;
 
 bot.start((ctx) => ctx.replyWithMarkdown(`Hey [${ctx.message.chat.first_name}](https://t.me/${ctx.message.chat.username}) , Welcome !\nSend me a long URL and get it shortened. \n\n Made with ❤ by [𝔄𝔉𝔉𝔄𝔑](https://t.me/AffanTheBest) .`));
 bot.help((ctx) => ctx.reply('Send me a sticker'))
@@ -19,6 +19,7 @@ bot.on('text', (ctx) => {
             reply_markup: {
                 inline_keyboard: [ [{text: shortenURL , url:shortenURL}] ]
         }})})
+        .catch(err => ctx.reply('Sorry, an error has been occurred. PLease try again later.'))
     }else{
         ctx.reply('Please send a valid URL !');
     }})
