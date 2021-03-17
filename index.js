@@ -9,10 +9,7 @@ const bot = new Telegraf(token);
 
 bot.start((ctx) => {
     if(ctx.message.chat.type == 'private'){
-        console.log("It's private chat.")
-        console.log(ctx.message)
-    }else{
-        console.log(ctx.message);
+        ctx.replyWithMarkdown(`Hey ${ctx.message.from.first_name}, Welcome ! \nUse /help to get started. Send me a long URL and get it shortened. \n\nMade with ❤ by [𝔄𝔉𝔉𝔄𝔑](https://t.me/AffanTheBest).`);
     }
 });
 bot.help((ctx) => ctx.replyWithMarkdown("/start - Restart the bot. \n/help - Get this message. \n\n/unshort - Extract long URL from any shortend URL. (Eg.  ``` /unshort https://cutt.ly/qzXU9A2```). \n\nTo short a big URL just send me the long URL and I'll give shorten link."))
