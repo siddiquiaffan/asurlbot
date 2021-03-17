@@ -4,17 +4,18 @@ const validUrl = require('valid-url');
 const {Telegraf } = require('telegraf');
 const bot = new Telegraf(token);
 
-const unshort = (message , chatId) => {
+const unshort = (message , chatId, username) => {
   const url = message.split(' ').slice(1)[0];
   if(validUrl.isUri(url)) {
     axios.get(url)
     .then((res) => {
       const longUrl = res.request.res.responseUrl;
       bot.telegram.sendMessage(
-        chatId ,`Here's the extracted link : \n👉 ${longUrl}` , 
+        chatId ,`Here's the extracted link : \n👉 ${longUrl} \n\n @${username}` , 
       {
         reply_markup: {
-            inline_keyboard: [ [{text: "Extracted URL" , url:longUrl}] ]
+            inline_keyboard: [ [{text: "Extracted URL" , url:longUrl}] ],
+            force_reply : ture
       }})
 
     }).catch(err => console.error('Link is not valid!'))
