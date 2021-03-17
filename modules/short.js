@@ -9,7 +9,7 @@ const short = (url , chatId, username) => {
         .then((res) => {
             const shortenURL = res.data.url.shortLink;
             bot.telegram.sendMessage(
-                chatId ,`Here's the shorten url : \n👉 ${shortenURL} \n\n@${username}` , 
+                chatId ,`Here's the shorten url : \n👉 ${shortenURL} \n\n${username ? '@'+username : "" }` , 
             {
                 reply_markup: {
                     inline_keyboard: [ [{text: shortenURL , url:shortenURL}] ]
