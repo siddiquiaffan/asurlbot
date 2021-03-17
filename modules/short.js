@@ -4,12 +4,12 @@ const {Telegraf} = require('telegraf');
 const bot = new Telegraf(token);
 
 
-const short = (url , chatId) => {
+const short = (url , chatId, username) => {
     axios.get(`http://cutt.ly/api/api.php?key=${key}&short=${url}`)
         .then((res) => {
             const shortenURL = res.data.url.shortLink;
             bot.telegram.sendMessage(
-                chatId ,`Here's the shorten url : \n👉 ${shortenURL}` , 
+                chatId ,`Here's the shorten url : \n👉 ${shortenURL} \n\n@${username}` , 
             {
                 reply_markup: {
                     inline_keyboard: [ [{text: shortenURL , url:shortenURL}] ]
