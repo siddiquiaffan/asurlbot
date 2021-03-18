@@ -4,7 +4,7 @@ const validUrl = require("valid-url");
 const { Telegraf } = require("telegraf");
 const bot = new Telegraf(token);
 
-const unshort = (message, chatId) => {
+const unshort = (message, chatId, username) => {
   const url = message.split(" ").slice(1)[0];
   if (validUrl.isUri(url)) {
     axios
@@ -23,7 +23,8 @@ const unshort = (message, chatId) => {
         );
       })
       .catch((err) => {
-        const longUrl = err.request._currentUrl || err.request._options.href;
+        console.log(err)
+        const longUrl = err.request._options.href || err.request._currentUrl;
         if (longUrl) {
           bot.telegram.sendMessage(
             chatId,
