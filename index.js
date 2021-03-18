@@ -12,9 +12,21 @@ bot.start((ctx) => {
         ctx.replyWithMarkdown(`Hey ${ctx.message.from.first_name}, Welcome ! \nUse /help to get started. Send me a long URL and get it shortened. \n\nMade with ❤ by [𝔄𝔉𝔉𝔄𝔑](https://t.me/AffanTheBest).`);
     }
 });
-bot.help((ctx) => ctx.replyWithMarkdown("/start - Restart the bot. \n/help - Get this message. \n\n/unshort - Extract long URL from any shortend URL. (Eg.  ``` /unshort https://cutt.ly/qzXU9A2```). \n\nTo short a big URL just send me the long URL and I'll give shorten link."))
-bot.on('sticker', (ctx) => ctx.reply('Am I joke to you , Send an url to get work done!'))
-bot.hears('hi', (ctx) => ctx.reply('Hey there!'))
+bot.help((ctx) => {
+    if(ctx.message.chat.type == 'private'){
+        ctx.replyWithMarkdown("/start - Restart the bot. \n/help - Get this message. \n\n/unshort - Extract long URL from any shortend URL. (Eg.  ``` /unshort https://cutt.ly/qzXU9A2```). \n\nTo short a big URL just send me the long URL and I'll give shorten link.");
+    }
+})
+bot.on('sticker', (ctx) => {
+    if(ctx.message.chat.type == 'private'){
+        ctx.reply('Am I joke to you , Send an url to get work done!')
+    }
+})
+bot.hears('hi', (ctx) => {
+    if(ctx.message.chat.type == 'private'){
+        ctx.reply('Hey there!')
+    }
+});
 bot.command('unshort' , (ctx) => unshort(ctx.message.text , ctx.chat.id, ctx.message.from.username));
 bot.command('short' , (ctx) => {
     const url = ctx.message.text.split(' ').slice(1)[0];
