@@ -27,18 +27,18 @@ bot.hears('hi', (ctx) => {
         ctx.reply('Hey there!')
     }
 });
-bot.command('unshort' , (ctx) => unshort(ctx.message.text , ctx.chat.id, ctx.message.from.username));
+bot.command('unshort' , (ctx) => unshort(ctx));
 bot.command('short' , (ctx) => {
     const url = ctx.message.text.split(' ').slice(1)[0];
     if(validUrl.isUri(url)){
-        short(url , ctx.chat.id, ctx.message.from.username);
+        short(url , ctx);
     }else{
         ctx.reply('Please send a valid URL !');
     }
 })
 bot.on('text', (ctx) => {
     if(ctx.message.chat.type == 'private' && validUrl.isUri(ctx.message.text)){
-        short(ctx.message.text , ctx.chat.id);
+        short(ctx.message.text , ctx);
     }else if(ctx.message.chat.type == 'private'){
         ctx.reply('Please send a valid URL !');
     }})
