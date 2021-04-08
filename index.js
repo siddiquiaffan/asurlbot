@@ -48,6 +48,7 @@ bot.hears('hi', (ctx) => {
     if(ctx.message.chat.type == 'private'){
         ctx.reply('Hey there!')
     }
+<<<<<<< HEAD
 })
 
 bot.command('unshort' , (ctx) => {
@@ -91,17 +92,21 @@ bot.command('unshort' , (ctx) => {
     }
 })
 
+=======
+});
+bot.command('unshort' , (ctx) => unshort(ctx.message.text , ctx.chat.id, ctx.message.from.username));
+>>>>>>> parent of 0ce1222 (Now bot will send links by replying to the message.)
 bot.command('short' , (ctx) => {
     const url = ctx.message.text.split(' ').slice(1)[0];
     if(validUrl.isUri(url)){
-        short(url , ctx);
+        short(url , ctx.chat.id, ctx.message.from.username);
     }else{
         ctx.reply('Please send a valid URL !');
     }
 })
 bot.on('text', (ctx) => {
     if(ctx.message.chat.type == 'private' && validUrl.isUri(ctx.message.text)){
-        short(ctx.message.text , ctx);
+        short(ctx.message.text , ctx.chat.id);
     }else if(ctx.message.chat.type == 'private'){
         ctx.reply('Please send a valid URL !');
     }})
