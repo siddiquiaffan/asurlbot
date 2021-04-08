@@ -11,6 +11,8 @@ const short = (url , ctx) => {
             bot.telegram.sendMessage(
                 ctx.chat.id ,`Here's the shorten url : \n👉 ${shortenURL} .` , 
             {   reply_to_message_id: ctx.update.message.message_id ,
+                allow_sending_without_reply : true,
+                disable_web_page_preview : true,
                 reply_markup: {
                     inline_keyboard: [ [{text: shortenURL , url:shortenURL}] ]
         }})})
