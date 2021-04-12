@@ -19,7 +19,7 @@ const short = (url , ctx) => {
                     reply_markup: {
                         inline_keyboard: [ [{text: shortenURL , url:shortenURL}] ]
                 }})
-            }else if( status == 1) {
+            }else{
                 bot.telegram.sendMessage(
                     ctx.chat.id ,`The URL you've sent is already shortened : \n👉 ${url} .` , 
                 {   reply_to_message_id: ctx.update.message.message_id ,
