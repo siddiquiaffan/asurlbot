@@ -37,7 +37,7 @@ bot.start((ctx) => {
 });
 bot.help((ctx) => {
     if(ctx.message.chat.type == 'private'){
-        ctx.replyWithMarkdown("/start - Restart the bot. \n/help - Get this message. \n\n/unshort - Extract long URL from any shortend URL. (Eg.  ``` /unshort https://cutt.ly/qzXU9A2```). \n\nTo short a big URL just send me the long URL and I'll give shorten link." , 
+        ctx.replyWithMarkdown("To short a big URL just send me the long URL and I'll give shorten link.\n\n/start - Restart the bot. \n/help - Get this message. \n/short - Short Long Urls (Eg `/short https://github.com/AffanTheBest`)\n/unshort - Extract long URL from any shortend URL. (Eg. `/unshort https://cutt.ly/qzXU9A2`). \nType `@AsUrlBot` in chat input to use inline. (Eg. `@AsUrlBot Macbook`)\n\n/donate - Donate to developer." , 
         {
             reply_to_message_id: ctx.update.message.message_id,
             allow_sending_without_reply: true,
@@ -49,6 +49,22 @@ bot.help((ctx) => {
         );
     }
 })
+
+bot.command('donate', async(ctx) => {
+    const donate_btns = [
+        {text: 'Ko-fi', url: 'https://ko-fi.com/affanthebest'},
+        {text: 'Paypal', url: 'https://paypal.me/affanthebest'}
+    ]
+    ctx.replyWithMarkdown('Thanks for showing intrest in donating. Remember every donation matters!\n\nYou can donate me by using following links:\nPaypal: https://paypal.me/affanthebest\nKo-fi - https://ko-fi.com/affanthebest \n\nUPI - `siddiquiaffan201@okaxis`\n\nFor any other methods contact @AffanTheBest personally.',
+    {  
+        reply_to_message_id: ctx.update.message.message_id,
+        allow_sending_without_reply: true,
+        disable_web_page_preview: true,
+        reply_markup: {
+        inline_keyboard: [donate_btns],
+        },
+    });
+    })
 
 bot.command('unshort' ,async (ctx) => {
     const url = ctx.message.text.split(' ').slice(1)[0];
