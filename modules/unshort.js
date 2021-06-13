@@ -1,15 +1,13 @@
 const axios = require("axios");
-const { token } = require("../config");
-const validUrl = require("valid-url");
-const { Telegraf } = require("telegraf");
-const bot = new Telegraf(token);
-const fs = require('fs');
 
-const unshort = (url) => {
-      const promise = axios.get(url);
-      const dataPromise = promise.then((res) => res);
-      return dataPromise;
+const unshort = async (url) => {
+      const res = await axios.get(url);
+      try{
+            const longUrl = res.request.res.responseUrl ? res.request.res.responseUrl : url;
+            return longUrl;
+      }catch(err){
+            return 'Failed to extratc long url.'
+      }
    
-  }
-
+}
 module.exports = unshort;

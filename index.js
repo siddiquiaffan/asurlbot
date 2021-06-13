@@ -11,6 +11,16 @@ const default_btn = [
 
 const bot = new Telegraf(token);
 
+const options = (ctx, btnText, btnUrl) => {
+    return { reply_to_message_id: ctx.update.message.message_id ,
+             allow_sending_without_reply : true,
+             disable_web_page_preview : true,
+             reply_markup: {
+                inline_keyboard: [[{ text: btnText, url: btnUrl }]]
+             }
+            }
+} 
+
 bot.start((ctx) => {
     if(ctx.message.chat.type == 'private'){
         ctx.replyWithMarkdown(`Hey ${ctx.message.from.first_name}, Welcome ! \nUse /help to get started. Send me a long URL and get it shortened. \n\nMade with ❤ by [𝔄𝔉𝔉𝔄𝔑](https://t.me/AffanTheBest).` ,
@@ -50,61 +60,56 @@ bot.hears('hi', (ctx) => {
     }
 })
 
-bot.command('unshort' , (ctx) => {
+bot.command('unshort' ,async (ctx) => {
     const url = ctx.message.text.split(' ').slice(1)[0];
     if(validUrl.isUri(url)){
-        unshort(url).then(data => {
-            const longUrl = data.request.res.responseUrl;
-            bot.telegram.sendMessage(
-                ctx.chat.id,
-                `Here's the extracted link : \n👉 ${longUrl} .`,
-                { reply_to_message_id: ctx.update.message.message_id ,
-                  allow_sending_without_reply : true,
-                  disable_web_page_preview : true,
-                  reply_markup: {
-                    inline_keyboard: [[{ text: "Extracted URL", url: longUrl }]],
-                    force_reply: true,
-                  },
-                }
-              )
-        }).catch(err => {
-            const longUrl = err.request._options.href || err.request._currentUrl;
-            if (longUrl) {
-                bot.telegram.sendMessage(
-                  ctx.chat.id,
-                  `Here's the extracted link : \n👉 ${longUrl} .`,
-                  { reply_to_message_id: ctx.update.message.message_id ,
-                    allow_sending_without_reply : true,
-                    disable_web_page_preview : true,
-                    reply_markup: {
-                      inline_keyboard: [[{ text: "Extracted URL", url: longUrl }]],
-                      force_reply: true,
-                    },
-                  }
-                )
-              } else {
-                ctx.replyWithMarkdown("Link is invalid");
-              }
-        })
+        const longUrl = await unshort(url);
+        ctx.replyWithMarkdown(
+            `Here's the extracted link : \n👉 ${longUrl} .`, options(ctx, 'Extracted URL', longUrl)
+        )
     }else{
-        ctx.replyWithMarkdown('__Please send a valid URL !')
+        ctx.replyWithMarkdown('Please send a valid URL !')
     }
 })
 
-bot.command('short' , (ctx) => {
+bot.command('short' , async(ctx) => {
     const url = ctx.message.text.split(' ').slice(1)[0];
     if(validUrl.isUri(url)){
-        short(url , ctx);
+        const shortReq = await short(url);
+        const status = shortReq.status;
+        ctx.replyWithMarkdown(shortReq.msg, options(ctx, status==true ? shortReq.url : '', status==true ? shortReq.url : ''));
     }else{
         ctx.reply('Please send a valid URL !');
     }
 })
-bot.on('text', (ctx) => {
+bot.on('text', async(ctx) => {
     if(ctx.message.chat.type == 'private' && validUrl.isUri(ctx.message.text)){
-        short(ctx.message.text , ctx);
+        const shortReq = await short(ctx.message.text);
+        const status = shortReq.status;
+        ctx.replyWithMarkdown(shortReq.msg, options(ctx, status==true ? shortReq.url : '', status==true ? shortReq.url : ''));
     }else if(ctx.message.chat.type == 'private'){
         ctx.reply('Please send a valid URL !');
     }})
+
+bot.on('inline_query', async(ctx) => {
+    const method = ctx.inlineQuery.query.split(' ')[0];
+    const url = ctx.inlineQuery.query.split(' ')[1];
+    const genArticle = (title, description, message_text) => ({
+        type: 'article', id: 1, title, description, thumb_url: '',input_message_content:{
+            message_text, disable_web_page_preview: true, parse_mode: 'markdown' 
+        }
+    })
+    if(validUrl.isUri(url)){
+      if(method == 'short' ){
+        const shortReq = await short(url);
+        return await ctx.answerInlineQuery([genArticle('SHORT', `Short ${url}`, shortReq.msg)])
+      }else if(method == 'unshort' ){
+        const longUrl = await unshort(url);
+        return await ctx.answerInlineQuery([genArticle('UNSHORT', `Unshort ${url}`, `Here's the extracted link : \n👉 ${longUrl} .`)])
+      }
+    }
+})
+
 bot.launch()
 
 // Enable graceful stop
