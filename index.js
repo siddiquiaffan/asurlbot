@@ -49,16 +49,6 @@ bot.help((ctx) => {
         );
     }
 })
-bot.on('sticker', (ctx) => {
-    if(ctx.message.chat.type == 'private'){
-        ctx.reply('Am I joke to you , Send an url to get work done!')
-    }
-})
-bot.hears('hi', (ctx) => {
-    if(ctx.message.chat.type == 'private'){
-        ctx.reply('Hey there!')
-    }
-})
 
 bot.command('unshort' ,async (ctx) => {
     const url = ctx.message.text.split(' ').slice(1)[0];
