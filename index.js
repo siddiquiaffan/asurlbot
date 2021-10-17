@@ -1,15 +1,13 @@
-const axios = require('axios');
 const validUrl = require('valid-url');
 const { Telegraf } = require('telegraf');
 const short = require('./modules/short');
 const unshort = require('./modules/unshort');
-const {token } = require('./config');
 const default_btn = [
     { text: "Join Channel", url: "https://t.me/asprojects" },
     { text: "Support Group", url: "https://t.me/assupportchat" },
   ];
 
-const bot = new Telegraf(token);
+const bot = new Telegraf(process.env.BOT_TOKEN);
 
 const options = (ctx, btnText, btnUrl) => {
     return { reply_to_message_id: ctx.update.message.message_id ,

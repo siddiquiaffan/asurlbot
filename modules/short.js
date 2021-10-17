@@ -1,8 +1,7 @@
 const axios = require('axios');
-const {key} = require('../config.js');
 
 const short = async(url) => {
-    const shortReq = await axios.get(`http://cutt.ly/api/api.php?key=${key}&short=${url}`);
+    const shortReq = await axios.get(`http://cutt.ly/api/api.php?key=${process.env.API_KEY}&short=${url}`);
     const data = await shortReq.data;
     const shortenURL = data.url.shortLink;
     const status = data.url.status;
