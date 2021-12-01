@@ -3,8 +3,8 @@ const { Telegraf } = require('telegraf');
 const short = require('./modules/short');
 const unshort = require('./modules/unshort');
 const default_btn = [
-    { text: "Join Channel", url: "https://t.me/asprojects" },
-    { text: "Support Group", url: "https://t.me/assupportchat" },
+    { text: "Join Channel", url: "https://t.me/CloudUpdateslk" },
+    { text: "Support", url: "https://t.me/CloudAssistBot" },
   ];
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
@@ -21,7 +21,7 @@ const options = (ctx, btnText, btnUrl) => {
 
 bot.start((ctx) => {
     if(ctx.message.chat.type == 'private'){
-        ctx.replyWithMarkdown(`Hey ${ctx.message.from.first_name}, Welcome ! \nUse /help to get started. Send me a long URL and get it shortened. \n\nMade with ❤ by [𝔄𝔉𝔉𝔄𝔑](https://t.me/AffanTheBest).` ,
+        ctx.replyWithMarkdown(`Hey ${ctx.message.from.first_name}, Welcome ! \nUse This is a URL Short and Unshort bot.\nUse /help to get started. Send me a long URL and get it shortened. \n\nPlease Join Our Main Channel [@CloudUpdateslk](https://t.me/CloudUpdateslk).` ,
         {
             reply_to_message_id: ctx.update.message.message_id,
             allow_sending_without_reply: true,
